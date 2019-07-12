@@ -1,0 +1,137 @@
+package bank;
+import java.awt.*;
+
+import java.awt.event.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.*;
+
+
+public class Delete extends JFrame implements ActionListener
+{
+
+	String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
+	String url = "jdbc:sqlserver://localhost:1433;DatabaseName=SuperMarket"; 
+	String User="sa"; 
+	String password="123456"; 
+	Statement sta=null;
+    ResultSet res=null;
+    Connection conn=null;
+    
+	JLabel lab_delete=new JLabel("销户");
+	
+	JLabel lab_cno=new JLabel("卡号");
+	JTextField tf_cno=new JTextField(20);
+	
+	JLabel lab_password=new JLabel("密码");
+	JTextField tf_password=new JTextField(20);
+	
+	
+	JButton btn_ok=new JButton("完成");
+	JButton btn_cancel=new JButton("取消");
+	JPanel panel1 = new JPanel();
+	JPanel panel2 = new JPanel();
+	JPanel panel3 = new JPanel();
+	JPanel panel4 = new JPanel();
+	Container cp=getContentPane();
+	
+	public Delete( String title)
+	{
+		super(title);
+		cp.setLayout(new GridLayout());
+		panel1.setLayout(new GridLayout(1,1,10,10));
+		panel1.add(lab_delete);
+		panel2.setLayout(new GridLayout(1,2,10,10));
+		panel2.add(lab_cno);
+		panel2.add(tf_cno);
+		
+		panel3.setLayout(new GridLayout(1,2,10,10));
+		panel3.add(lab_password);
+		panel3.add(tf_password);
+		panel4.setLayout(new GridLayout(1,2,10,10));
+		panel4.add(btn_ok);
+		panel4.add(btn_cancel);
+	
+		lab_delete.setBounds(70,20,300,30);
+		lab_delete.setFont(new Font("楷体",Font.BOLD,30));
+		lab_delete.setForeground(Color.green);
+		cp.setLayout(new GridLayout(5,3,5,5));
+		cp.add(panel1);
+		cp.add(panel2);
+		cp.add(panel3);
+		cp.add(panel4);
+		pack();
+		/*lab_cno.setBounds(35,80,130,30);
+		tf_cno.setBounds(135,80,130,30);
+		lab_password.setBounds(35, 130, 130, 30);
+		tf_password.setBounds(135, 130, 130, 30);
+		btn_ok.setBounds(55, 290, 80, 30);
+		btn_cancel.setBounds(55, 290, 80, 30);*/
+		btn_ok.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		setVisible(true);
+		setBounds(350, 430, 500, 400);
+		
+	}
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getSource()==btn_ok)
+		{
+			try{
+				 Class.forName(driverName);
+				 Connection dbConn = DriverManager.getConnection(url,User,password);
+				 sta=dbConn.createStatement();
+
+				 String kch="'"+tf_cno.getText()+"'";
+				 
+  	             String sql= "select * from 库存 where 库存号="+kch;
+		         res = sta.executeQuery(sql); 
+		         if(tf_cno.getText().trim().equals(""))
+		         {
+		        	 
+		        	 JOptionPane.showMessageDialog(null,"请输入信息",null,JOptionPane.INFORMATION_MESSAGE,null);
+		         }
+		         else
+		         {
+		        	 
+		         
+		           if(!res.next())
+		           {
+		        	   JOptionPane.showMessageDialog(null,"此类商品不存在，无法删除",null,JOptionPane.INFORMATION_MESSAGE,null); 
+		               tf_cno.setText("");			   
+		           }
+		           else
+		        	   
+		           { 
+		        	 
+		        	     //String name1="'"+tf_id.getText()+"'";
+		        	     //String sql1="delete from 库存 where 名称="+name1;
+		                 //sta.executeUpdate(sql1);
+		                 JOptionPane.showMessageDialog(null, "退货成功",null,JOptionPane.INFORMATION_MESSAGE);   		   
+		                 tf_cno.setText("");
+                 }
+				   sta.close();
+				}
+			}catch(Exception e1){
+				e1.printStackTrace();
+				System.out.println("不成功！");
+		        }	
+		}
+		if(e.getSource()==btn_cancel)
+		{
+			setVisible(false);
+		}
+		
+		
+	}
+	
+	public static void main(String[] args) 
+	{
+		new Delete("惠友超市欢迎您！");
+	}
+}

@@ -1,0 +1,191 @@
+package SuperMarket;
+import java.awt.*;
+import java.awt.event.*;
+
+//import java.sql.account;
+//import java.sql.D_cunaccount;
+//import java.sql.D_quaccount;
+//import java.sql.H_account;
+//import java.sql.record;
+
+import javax.swing.*;
+
+
+public class Add extends JFrame implements ActionListener
+{
+
+	String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
+	String url = "jdbc:sqlserver://localhost:1433;DatabaseName=银行管理系统"; 
+	String User="sa"; 
+	String password="123456"; 
+	//Statement sta=null;
+    //ResultSet res=null;
+    //Connection conn=null;
+    
+	JLabel lab_open=new JLabel("       开户");
+	
+	JLabel lab_cno=new JLabel("卡号");
+	JTextField tf_cno=new JTextField(20);
+	
+	JLabel lab_name=new JLabel("姓名");
+	JTextField tf_name=new JTextField(20);
+	
+	JLabel lab_password=new JLabel("密码");
+	JTextField tf_password=new JTextField(20);
+	
+	JLabel lab_id=new JLabel("身份证号");
+	JTextField tf_id=new JTextField(20);
+	JLabel lab_sex=new JLabel("性别");
+	
+	JLabel lab_ba=new JLabel("账目");
+	JTextField tf_ba=new JTextField(20);
+	JLabel lab_date=new JLabel("日期");
+	JTextField tf_date=new JTextField(20);
+	JLabel lab_address=new JLabel("地址");
+	JTextField tf_address=new JTextField(20);
+	
+	JButton btn_add=new JButton("添加");
+	JButton btn_cancel=new JButton("取消");
+	JRadioButton rbtnMale=new JRadioButton("男");
+	JRadioButton rbtnFeMale=new JRadioButton("女");//单选按钮
+	JPanel panel1 = new JPanel();
+	JPanel panel2 = new JPanel();
+	JPanel panel3 = new JPanel();
+	JPanel panel4 = new JPanel();
+	JPanel panel5 = new JPanel();
+	JPanel panel6 = new JPanel();
+	JPanel panel7 = new JPanel();
+	JPanel panel8 = new JPanel();
+	JPanel panel9 = new JPanel();
+	JPanel panel10 = new JPanel();
+	
+
+	
+	Container cp=getContentPane();
+	
+	public Add( String title)
+	{
+		super(title);
+		cp.setLayout(new FlowLayout());
+		
+		panel1.setLayout(new GridLayout(1,1,10,10));
+		panel1.add(lab_open);
+		panel2.setLayout(new GridLayout(1,2,10,10));
+		panel2.add(lab_cno);
+		panel2.add(tf_cno);
+		
+		panel3.setLayout(new GridLayout(1,2,10,10));
+		panel3.add(lab_name);
+		panel3.add(tf_name);
+		panel4.setLayout(new GridLayout(1,2,10,10));
+		panel4.add(lab_password);
+		panel4.add(tf_password);
+		panel5.setLayout(new GridLayout(1,2,10,10));
+		panel5.add(lab_id);
+		panel5.add(tf_id);
+		panel6.setLayout(new GridLayout(1,2,10,10));
+		panel6.add(lab_sex);
+		ButtonGroup group=new ButtonGroup();
+		group.add(rbtnMale);
+		group.add(rbtnFeMale);
+		panel6.add(rbtnMale);
+		panel6.add(rbtnFeMale);
+		panel7.setLayout(new GridLayout(1,2,10,10));
+		panel7.add(lab_ba);
+		panel7.add(tf_ba);
+		panel8.setLayout(new GridLayout(1,2,10,10));
+		panel8.add(lab_date);
+		panel8.add(tf_date);
+		panel9.setLayout(new GridLayout(1,2,10,10));
+		panel9.add(lab_address);
+		panel9.add(tf_address);
+		panel10.setLayout(new GridLayout(1,2,10,10));
+		panel10.add(btn_add);
+		panel10.add(btn_cancel);
+		lab_open.setFont(new Font("楷体",Font.BOLD,30));
+		lab_open.setForeground(Color.green);
+		cp.setLayout(new GridLayout(10,3,5,5));
+		cp.add(panel1);
+		cp.add(panel2);
+		cp.add(panel3);
+		cp.add(panel4);
+		cp.add(panel5);
+		cp.add(panel6);
+		cp.add(panel7);
+		cp.add(panel8);
+		cp.add(panel9);
+		cp.add(panel10);
+		pack();
+		
+		
+		
+		btn_add.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		
+		setVisible(true);
+		setBounds(550, 230, 300, 400);
+		
+	}
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getSource()==btn_add)
+		{
+			try{
+				 Class.forName(driverName);
+//				 Connection dbConn = DriverManager.getConnection(url,User,password);
+//				 sta=dbConn.createStatement();
+
+				 String kch="'"+tf_id.getText()+"'";
+ 	             String sql= "select * from 库存 where 库存号="+kch;
+//		         res = sta.executeQuery(sql); 
+//		         if(tf_id.getText().trim().equals("")||tf_name.getText().trim().equals("")||tf_price.getText().trim().equals("")||tf_num.getText().trim().equals(""))
+		         {
+		        	 
+		        	 JOptionPane.showMessageDialog(null,"请完善信息",null,JOptionPane.INFORMATION_MESSAGE,null);
+		         }
+//		         else
+		         {
+//		           if(res.next())
+		           {
+		        	   JOptionPane.showMessageDialog(null,"此类商品已存在，无法添加",null,JOptionPane.INFORMATION_MESSAGE,null); 
+		               tf_cno.setText("");
+		               tf_name.setText("");
+		               tf_password.setText("");
+		               
+		        	     
+		           }
+		          // else 	   
+		           {     String kch1="'"+tf_id.getText()+"'";
+		                 String name="'"+tf_name.getText()+"'";
+		                 String password="'"+tf_password.getText()+"'";
+		                 
+		                 
+//		        	     String vsql= "insert into 库存 values("+kch1+","+name+","+price+","+num+")";
+//		        	     sta.executeUpdate(vsql);
+		                 JOptionPane.showMessageDialog(null, "添加成功",null,JOptionPane.INFORMATION_MESSAGE);
+		                 //文本框清空
+		                 tf_cno.setText("");
+			             tf_name.setText("");
+			             tf_password.setText("");
+			             
+                }
+//				   sta.close();
+				}
+			}catch(Exception e1){
+				e1.printStackTrace();
+				System.out.println("不成功！");
+		        }	
+		}
+		if(e.getSource()==btn_cancel)
+		{
+			setVisible(false);
+		}
+		
+	}
+	
+	public static void main(String[] args) 
+	{
+		new Add("惠友超市欢迎您！");
+	}
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cm.dao.HomeworkDao">
+    <select id="findAllHomework" resultMap="homeworkInfoMap">
+      select h.id h_id, u.userName, c.className, s.subName, h.endTime, h.fileSrc, h.pushTime from user u, homework h, subject s, classes c where u.userId=h.teacherId and s.subId = h.subId and c.classId = h.classId and h.teacherId=#{teacherId} and (s.subName like '%${className}%'or c.className=#{className})
+    </select>
+    <resultMap type="com.cm.model.Homework" id="homeworkInfoMap">
+        <id column="h_id" property="id" />
+        <result column="userId" property="userId"/>
+        <result column="classId" property="classId"/>
+        <result column="subId" property="subId"/>
+        <result column="fileSrc" property="fileSrc"/>
+        <result column="pushTime" property="pushTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="userName" property="userName"/>
+        <result column="className" property="className"/>
+        <result column="subName" property="subName"/>
+        <association property="user" javaType="com.cm.model.User">
+            <id column="u_id" property="userId" />
+            <result column="userName" property="userName"/>
+        </association>
+        <association property="classes" javaType="com.cm.model.Classes">
+            <id column="c_id" property="classId" />
+            <result column="className" property="className"/>
+        </association>
+        <association property="subject" javaType="com.cm.model.Subject">
+            <id column="s_id" property="subId" />
+            <result column="subName" property="subName"/>
+        </association>
+    </resultMap>
+    <select id="selectAllHomework" resultType="Homework">
+      select * from homework
+    </select>
+    <insert id="addHomework" parameterType="Homework">
+        insert into homework(teacherId,subId,pushTime,fileSrc,endTime,classId)
+        values(#{teacherId},#{subId},#{pushTime},#{fileSrc},#{endTime}, #{classId})
+	</insert>
+    <delete id="deleteHomework" parameterType="Homework">
+		delete from homework where id=#{id}
+	</delete>
+    <select id="findHomeworkById" resultMap="homeworkInfoMap">
+      select h.id h_id, u.userName, u.userId, c.className, h.classId, h.subId, s.subName, h.endTime, h.fileSrc, h.pushTime from user u, homework h, subject s, classes c where u.userId=h.teacherId and s.subId = h.subId and c.classId = h.classId and h.id=#{id}
+    </select>
+    <update id="updateHomework" parameterType="Homework" >
+      update homework set endTime=#{endTime} where id=#{id}
+    </update>
+</mapper>

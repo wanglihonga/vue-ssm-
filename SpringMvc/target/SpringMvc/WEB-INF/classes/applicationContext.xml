@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--数据源-链接数据库的基本信息,这里直接写,不放到*.properties资源文件中-->
+    <!--配合MyBatis-->
+    <!--配置数据库参数-->
+    <context:property-placeholder location="classpath*:*.properties"/>
+    <!--<context:property-placeholder location="classpath:value.properties" file-encoding="utf-8" ignore-unresolvable="true"/>-->
+    <!--数据库连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--配置连接池属性-->
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--c3p0连接池私有属性-->
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+        <property name="minPoolSize" value="${minPoolSize}"/>
+        <property name="autoCommitOnClose" value="false"/>
+        <property name="checkoutTimeout" value="${checkoutTimeout}"/>
+        <property name="acquireRetryAttempts" value="${acquireRetryAttempts}"/>
+    </bean>
+    <!-- 配置 SqlSessionFactory 对象，spring和MyBatis完美整合，不需要mybatis的配置映射文件-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置 MyBaties 全局配置⽂件:mybatis-config.xml -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 扫描 model 包 使⽤别名 -->
+        <property name="typeAliasesPackage" value="com.cm.model"/>
+        <!-- 扫描 sql 配置⽂件:mapper 需要的 xml ⽂件 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <!--<property name="plugins">-->
+            <!--<array>-->
+                <!--&lt;!&ndash; 传入插件的对象 &ndash;&gt;-->
+                <!--<bean class="com.github.pagehelper.PageInterceptor">-->
+                    <!--<property name="properties">-->
+                        <!--<props>-->
+                            <!--&lt;!&ndash;数据库类型&ndash;&gt;-->
+                            <!--<prop key="helperDialect">oracle</prop>-->
+                            <!--&lt;!&ndash;页码超出范围自动修正&ndash;&gt;-->
+                            <!--<prop key="reasonable">true</prop>-->
+                        <!--</props>-->
+                    <!--</property>-->
+                <!--</bean>-->
+            <!--</array>-->
+        <!--</property>-->
+    </bean>
+    <!-- DAO接口所在包名，Spring会自动查找之中的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cm.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    <!--spring-service-->
+    <!-- 扫描 service 包下所有使⽤注解的类型 -->
+    <context:component-scan base-package="com.cm.service"/>
+    <!--事务管理-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入dataSource-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--开启事务注解扫描-->
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+</beans>

@@ -1,0 +1,57 @@
+监听属性（watch）
+
+含义：监听data中定义的属性，data值改变，watch触发，从而执行特定的方法
+
+使用前提：data中存在这个属性
+
+使用：
+	
+	<div @click="add">点我啊</div>
+
+	<div>{{data}}</div>
+
+	data() {	
+		number: 1
+	},
+	watch: {
+		number() {
+			return this.number + 1
+		}	
+
+	},
+	methods: {
+		add() {
+			this.number + 1
+		}
+	}
+
+总结：这个data中的number默认为1，点击事件触发+1，number改变，watch触发执行+1
+
+
+
+计算属性（computed）
+
+含义：复杂版本的监听属性
+
+使用前提：data中存在这个属性	
+
+使用:
+
+	<div>{{getList}}</div>
+
+	created() {
+		通过api获取到的数据保存在data
+		this.list = api数据
+	}
+
+	computed: {
+		最后得出的数据结果，可以直接在html中用{{getList}}表示
+		getList() {
+			就相当于是一个function，里面可以随便写自己的逻辑
+			return 返回自己所需要的值
+			return this.list
+		}
+		
+	}
+
+总结：处理数据更方便，可以动态的实现数据影响视图，更加符合vue的标准

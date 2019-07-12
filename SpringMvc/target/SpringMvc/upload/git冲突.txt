@@ -1,0 +1,5 @@
+1.看分支  git branch
+2.切换 master   git checkout master
+3.更新 master  git pull
+4.切换自己的分支 git checkout 自己的分支名称
+5.在webstorm中使用git进行提交，或者是进行传统的git上传操作（详情看组内文档）

@@ -1,0 +1,439 @@
+//顺序表
+ #include <iostream.h>
+
+void Delete(int a[], int i, int n)//删除数组中的一个数
+{
+	if ((i<0) || (i>n - 1))
+	{
+		cout << "删除错误";
+	}
+	else
+	{
+		for (int j = i + 1; j<n; j++)//改变数组的长度
+			a[j - 1] = a[j];
+		//n=n-1;
+	}
+}
+int main()
+{
+	int a[200];//定义数组
+	int n, m, i;
+	cout << "请输入总人数n：" << endl;
+	cin >> n;
+	cout << "请输入位置i:" << endl;
+	cin >> i;
+	cout << "请输入数到的位置m:" << endl;
+	cin >> m;
+	int j = 0;
+	for (j; j<n; j++)//给数组赋值
+	{
+		a[j] = j + 1;
+	}
+	int	k = i - 1;//数组从0开始 
+	cout << "排列的顺序是：" << endl;
+	while (n != 0)//当总人数不是0时进行操作
+	{
+		k = (k + m - 1) % n;  //确定位置 ,K是数组脚标，%n取余数就是数组的脚标
+		cout << a[k];
+		Delete(a, k, n);
+		n = n - 1;   // 数组的长度变少     
+	};
+	cout << endl;
+	return 0;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+链表
+#include<iostream.h>
+#include<stdlib.h>
+typedef struct node //定义链表
+{
+	int data;
+	struct node *next;
+}*ysf;
+void main()
+{
+	ysf f,p,q;
+	int m,n,c,i;
+	cout<<"输入人数"<<endl;
+	cin>>n;
+	for(i=1;i<=n;i++)
+	{
+		if(i==1)
+		{
+			f=p=(ysf)malloc(sizeof(struct node));//指针分配内存空间
+			if(!f) exit(1);//判断分配是否成功
+		}
+		else
+		{
+			q=(ysf)malloc(sizeof(struct node));
+			if(!q) exit(1);
+			p->next=q;
+			p=q;//p指针始终指向链表的尾部
+		}
+		p->data=i;
+	}
+	p->next=f;
+	cout<<"输入报数的次数"<<endl;
+	cin>>m;
+	cout<<"输入c的值"<<endl;
+	cin>>c;
+	cout<<"次序如下:";
+	for(i=1;i<c;i++)
+	p=p->next;//p为尾结点
+	q=p->next;//p指向头结点
+	while(true)
+	{
+		for(i=1;i<m;i++)
+		{
+			q=q->next;//q为当前结点指针
+			p=p->next;//p为q的前驱结点指针
+		}
+		cout<<q->data<<" ";
+		if(q->data==p->data)
+		{
+			cout<<endl;
+			exit(1);
+		}
+		else
+		{
+			p->next=q->next;
+			free(q);
+			q=p->next;
+		}		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//二叉树
+#include<iostream> 
+#include<malloc.h> 
+using namespace std; 
+#include<stdlib.h> 
+#include<math.h> 
+typedef struct TNode //定义二叉树
+{ 
+	int data; 
+	TNode *lchild,*rchild; 
+}
+TNode,*BTree; 
+int Nil=0; 
+void InitBTree(BTree &T) //定义一个空树
+{ 
+	T=NULL; 
+} 
+void CreateBTree(BTree &T) //建立一个树
+{ 
+	int number; 
+	cin>>number; 
+	if(number==Nil) // 结点的值为空
+		T=NULL; 
+	else // 结点的值不为空
+	{ 
+		T=(BTree)malloc(sizeof(TNode)); // 生成根结点
+		if(!T) 
+			exit(OVERFLOW); 
+		T->data=number; // 将值赋给T所指结点
+		CreateBTree(T->lchild); // 递归构造左子树
+		CreateBTree(T->rchild); // 递归构造右子树
+	} 
+} 
+void DestroyBTree(BTree &T) 
+{ 
+	if(T) // 非空树
+	{ 
+		DestroyBTree(T->lchild); // 递归销毁左子树，如无左子树，则不执行任何操作
+		DestroyBTree(T->rchild); // 递归销毁右子树，如无右子树，则不执行任何操作
+		free(T); // 释放根结点
+		T=NULL; // 空指针赋0 
+	} 
+} 
+void PreOrderTraverse(BTree T) 
+{ 
+	if(T) // T不空
+	{ 
+		cout<<T->data<<" "; // 先访问根结点
+		PreOrderTraverse(T->lchild); // 再先序遍历左子树
+		PreOrderTraverse(T->rchild); // 最后先序遍历右子树
+	} 
+} 
+void PreOrderTraverse1(BTree T) //非递归先序遍历
+{ 
+	if(T==NULL)
+		return; 
+	else 
+	{ 
+		BTree p; //定义一个动态节点
+		p=T; //T为根节点
+		int top=0; 
+		BTree s[100]; //建立栈，总长度为100 
+		while(p!=NULL||top!=0) 
+		{ 
+			while(p!=NULL) 
+			{ 
+				cout<<p->data<<" ";//输出数据域 
+				if(p->rchild!=NULL) 
+				{
+					top++; 
+					s[top]=p->rchild; 
+				} 
+				p=p->lchild; 
+			} 
+			if(top!=0) 
+			{ 
+				p=s[top]; //p出栈
+				top--; 
+			} 
+		} 
+	} 
+} 
+void InOrderTraverse(BTree T) //递归中序遍历
+{ 
+	if(T) 
+	{ 
+		InOrderTraverse(T->lchild); // 先中序遍历左子树
+		cout<<T->data<<" "; // 再访问根结点
+		InOrderTraverse(T->rchild); // 最后中序遍历右子树
+	} 
+} 
+void InOrderTraverse1(BTree T) //非递归中序遍历
+{ 
+	if(T==NULL)
+		return; 
+	else 
+	{ 
+		BTree p; 
+		p=T; 
+		int top=0; 
+		BTree s[100]; 
+		while(p!=NULL||top!=0) 
+		{ 
+			while(p!=NULL)
+			{ 
+				top++; 
+				s[top]=p; 
+				p=p->lchild; 
+			} 
+			if(p==NULL) 
+			{ 
+				p=s[top]; 
+				top--; 
+				cout<<p->data<<" "; 
+				p=p->rchild; 
+			} 
+		} 
+	} 
+} 
+void PostOrderTraverse(BTree T) 
+{ 
+	if(T) // T不空
+	{ 
+		PostOrderTraverse(T->lchild); // 先后序遍历左子树
+		PostOrderTraverse(T->rchild); // 再后序遍历右子树
+		cout<<T->data<<" "; // 最后访问根结点
+	} 
+} 
+void PostOrderTraverse1(BTree T) //非递归后续遍历
+{ 
+	if(T==NULL)
+		return; 
+	else 
+	{ 
+		BTree p; 
+		p=T; 
+		int top=0; 
+		BTree s[100]; 
+		int a[100]; //栈的标志位
+		while(p!=NULL||top!=0) 
+		{ 
+			while(p!=NULL) 
+			{ 
+				top++; 
+				s[top]=p;//进栈 
+				a[top]=1; 
+				p=p->lchild; //结点指向左子树
+			} 
+			while((top!=0)&&(p==NULL)) 
+			{ 
+				p=s[top]; //出栈
+				top--; 
+				if(a[top+1]>0) 
+				{ 
+					top++; 
+					a[top]=-1; 
+					s[top]=p; //右子树进栈
+					p=p->rchild; //节点指向右子树
+				} 
+				else 
+				{ 
+					cout<<p->data<<" "; //输出根节点
+					p=NULL; 
+				} 
+			} 
+		} 
+	} 
+} 
+void main() 
+{ 
+	BTree T; 
+	InitBTree(T); // 初始化二叉树T 
+	cout<<"按先序次序输入二叉树中结点的值,输入0表示节点为空，输入范例：1 2 3 0 0 4 0 0 5 0 0"<<endl;
+	CreateBTree(T); // 建立二叉树T 
+	cout<<endl; 
+	cout<<"先序递归遍历二叉树："<<endl; 
+	PreOrderTraverse(T); // 先序递归遍历二叉树T 
+	cout<<endl; 
+	cout<<"先序非递归遍历二叉树："<<endl; 
+	PreOrderTraverse1(T); // 先序非递归遍历二叉树T 
+	cout<<endl; 
+	cout<<"中序递归遍历二叉树："<<endl; 
+	InOrderTraverse(T); // 中序递归遍历二叉树T 
+	cout<<endl; 
+	cout<<"中序非递归遍历二叉树："<<endl; 
+	InOrderTraverse1(T); // 中序非递归遍历二叉树T 
+	cout<<endl; 
+	cout<<"后序递归遍历二叉树："<<endl; 
+	PostOrderTraverse(T); // 后序递归遍历二叉树T 
+	cout<<endl; 
+	cout<<"后序非递归遍历二叉树："<<endl; 
+	PostOrderTraverse1(T); // 后序非递归遍历二叉树T 
+	cout<<endl; 
+}
+
+
+
+
+
+
+
+图
+#include <iostream.h>
+#include <stdlib.h>
+#define n 100//图中顶点个数最大值
+//链表的定义
+typedef struct Edgenode//弧结点的结构
+{
+	int adjvex;//该弧所指向的顶点的位置
+	struct Edgenode*next;//指向下一条弧的指针
+}*edgenode;
+typedef struct Vnode//顶点结点的结构
+{
+	int vertex;//顶点信息
+	struct Edgenode*link;//指向第一条依附该顶点的弧
+} adjList[n];//定义邻接表
+int visited1[n];
+int visited2[n];
+//创建邻接表
+void Create_adjList(adjList g)
+{
+	int b;
+	int e;
+	cout<<"输入定点个数和边数:";
+	cin>>b;
+	cin>>e;
+	for(int i=1;i<=b;i++)
+	{
+		int x;
+		cout<<"请输入第"<<i<<"个定点名:";
+		cin>>x;
+		g[i].vertex=x;
+        g[i].link=NULL;//第一个临界点
+	}
+	for(int k=0;k<e;k++)
+	{
+		int i,j;
+		cout<<"请输入定点对:";
+		cin>>i>>j;
+		cout<<"定点对为:("<<i<<","<<j<<")"<<endl;
+			edgenode p;
+		p=new Edgenode;
+		p->adjvex=j;
+		p->next=g[i].link;
+		g[i].link=p;
+		
+	}
+}//深度优先搜索
+void dfs(adjList g,int x)
+{
+	cout<<g[x].vertax<<" ";
+	visited1[x]=1;
+	edgenode p;
+	p=g[x].link;
+	while(p!=NULL)
+	{
+		if(visited1[p->adjvex]==0)
+			dfs(g,p->adjvex);
+		p=p->next;
+	}
+}//广度优先搜索
+void bfs(adjList g,int x)
+{
+	int Q[n];
+	int f=0;
+	int r=0;
+	int v;
+	cout<<g[x].vertax<<" ";
+	visited2[x]=1;
+	r++;
+	Q[x]=x;
+	edgenode p;
+	p=g[x].link;
+	do
+	{
+		while(p!=NULL)
+		{
+			v=p->adjvex;
+			if(visited2[v]==0)
+			{
+				r++;
+				Q[r]=v;
+				cout<<v<<" ";
+				visited2[v]=1;
+			}
+			p=p->next;
+		}
+		if(f!=r)
+		{
+			f++;
+			v=Q[f];
+			p=g[v].link;
+		}
+	}while(p!=NULL || (f!=r));
+}
+void main()
+{
+	adjList g;
+	//int x;
+	Create_adjList(g);
+	int visited1[n]={0};
+	int visited2[n]={0};
+	cout<<"深度优先搜索:";
+	dfs(g,1);
+	cout<<endl;
+	cout<<"广度优先搜索:";
+	bfs(g,1);
+	cout<<endl;
+}

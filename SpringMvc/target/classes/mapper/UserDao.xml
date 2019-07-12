@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cm.dao.UserDao">
+    <insert id="addUser" parameterType="User">
+		insert into user(userId,userName,password,sex,userType, classId)
+		values(#{userId},#{userName},#{password},#{sex},#{userType}, #{classId})
+	</insert>
+    <select id="findAll" resultType="User">
+      select * from user
+        <where>
+            <if test="userType!= null and userType!=''">
+              userType=#{userType} and userName like '%${userName}%' or userId=#{userName}
+            </if>
+        </where>
+    </select>
+    <select id="findUserById" resultType="User">
+      select * from user where userId = #{userId}
+    </select>
+    <select id="findUsersByUserType" resultType="User">
+      select * from user where userType = #{userType}
+    </select>
+    <update id="updatePwd" parameterType="com.cm.model.User" >
+      update user set password=#{newPwd} where userId=#{userId} and password =#{oldPwd}
+    </update>
+    <update id="resetPwd" parameterType="com.cm.model.User" >
+      update user set password='123456' where userId=#{userId}
+    </update>
+    <update id="uploadPhoto" parameterType="com.cm.model.User" >
+      update user set photo=#{photo} where userId=#{userId}
+    </update>
+    <update id="updatePhone" parameterType="com.cm.model.User" >
+      update user set phone=#{newPhone} where userId=#{userId}
+    </update>
+    <update id="updateTeacher" parameterType="com.cm.model.User" >
+      update user set userName=#{userName}, sex=#{sex} where userId=#{userId}
+    </update>
+    <delete id="deleteUser" parameterType="com.cm.model.User">
+		delete from user where userId=#{userId}
+	</delete>
+    <resultMap id="userMap" type="com.cm.model.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <!-- property对应实体类的属性名称，column为数据库字段名 -->
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="userType" property="userType" jdbcType="VARCHAR" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="oldPwd" property="oldPwd" jdbcType="VARCHAR" />
+        <result column="newPwd" property="newPwd" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!--<delete id="deleteUser" parameterType="String">-->
+            <!--delete from user where id=#{id}-->
+        <!--</delete>-->
+</mapper>

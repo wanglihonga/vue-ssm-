@@ -1,0 +1,42 @@
+页面结构:
+	template标签：只能有一个子元素
+	script标签：
+		data （） {}，基本属性，渲染属性
+		methods：{}， 方法，例如点击事件
+		filters: {}， 过滤，适用于项目中小部分调整，
+		watch：{}，   监听data中的数据改变
+		computed：{}，计算属性，用于处理数据，
+		components: {},import（引入），components（注册）
+	style标签：css样式
+
+生命周期：（这些属性在使用时，和data同级）
+	beforeCreate：创建之前，
+	created：创建之后，
+	beforeMount：挂载前，
+	mounted：挂载后，
+	beforeUpdate：更新前，
+	updated：更新后，
+	beforeDestroy：销毁前，
+	destroyed：销毁后
+
+---指令
+v-text ->把数据渲染成文本
+v-once ->当数据再次发生变化也不会导致页面刷新；只绑定一次数据
+v-html ->把html字符当成html渲染,一定是可以信任的html
+v-model ->双向绑定
+v-for ->解决循环问题的 更高效 会复用原有的结构
+v-cloak ->解决页面闪烁事件   style里面写[v-cloak]{display:none}
+v-if  ->操作的是DOM
+v-show ->操作的是样式
+
+---事件
+@click/...  主要是fn后面可以传参数也可以不传
+
+---路由
+	跳转新路由：
+		router.push（{path: '/about', params: {name: 1}, query: {name: 2}）
+	替换路由并跳转（不产生记录）：
+		router.replace('/about')
+	前进和后退:
+		router.go(n)  n是数字类型表示前进/后退几个
+

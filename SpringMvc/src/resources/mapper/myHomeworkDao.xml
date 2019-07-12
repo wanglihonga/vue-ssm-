@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cm.dao.myHomeworkDao">
+    <select id="getMyHomeworkList" resultMap="homeworkInfoMap">
+      select h.id h_id, u.userName, c.className, s.subName, h.endTime, h.fileSrc, h.pushTime from user u, homework h, subject s, classes c where u.userId = h.teacherId and s.subId = h.subId and c.classId = h.classId and h.classId=#{classId} and s.subName like '%${subName}%'
+    </select>
+    <resultMap type="com.cm.model.Homework" id="homeworkInfoMap">
+        <id column="h_id" property="id" />
+        <result column="fileSrc" property="fileSrc"/>
+        <result column="pushTime" property="pushTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="userName" property="userName"/>
+        <result column="className" property="className"/>
+        <result column="subName" property="subName"/>
+        <association property="user" javaType="com.cm.model.User">
+            <id column="u_id" property="userId" />
+            <result column="userName" property="userName"/>
+        </association>
+        <association property="classes" javaType="com.cm.model.Classes">
+            <id column="c_id" property="classId" />
+            <result column="className" property="className"/>
+        </association>
+        <association property="subject" javaType="com.cm.model.Subject">
+            <id column="s_id" property="subId" />
+            <result column="subName" property="subName"/>
+        </association>
+    </resultMap>
+    <select id="findmyHomeworkById" resultType="myHomework">
+      select * from myhomework where homeworkId=#{homeworkId}
+    </select>
+    <select id="findWorkByTeaId" resultType="myHomework">
+      select * from myhomework where teacherId=#{teacherId} and subName like '%${subName}%'
+    </select>
+    <insert id="addmyHomework" parameterType="Homework">
+        insert into myhomework(stuId,stuName,teacherName,homeworkId,subName,className,pushTime,judgeState,endTime,commitTime,uploadFile,downloadFile,classId,commitState,score,teacherId)
+        values(#{stuId},#{stuName},#{teacherName},#{homeworkId},#{subName},#{className},#{pushTime},#{judgeState},#{endTime},#{commitTime},#{uploadFile},#{downloadFile}, #{classId},#{commitState},#{score},#{teacherId})
+	</insert>
+    <update id="giveScore" parameterType="myHomework" >
+      update myHomework set score=#{score},judgeState='已批改' where homeworkId=#{homeworkId}
+    </update>
+</mapper>

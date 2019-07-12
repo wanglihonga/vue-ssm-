@@ -1,0 +1,46 @@
+<template>
+  <div id="app">
+    <div>
+      <schart :canvasId="canvasId"
+              :type="type"
+              style="width: 40%;height: 200px;"
+              :data="data"
+              :options="options"
+      ></schart>
+    </div>
+  </div>
+</template>
+
+<script >
+import Schart from 'vue-schart'
+export default {
+  components: {
+    Schart
+  },
+  data () {
+    return {
+      canvasId: 'myCanvas',
+      type: 'bar',
+      data: [
+        {name: '1月', value: 50},
+        {name: '2月', value: 60},
+        {name: '3月', value: 70},
+        {name: '4月', value: 80},
+        {name: '5月', value: 90},
+        {name: '6月', value: 100},
+        {name: '7月', value: 110},
+        {name: '8月', value: 120},
+        {name: '9月', value: 130},
+        {name: '10月', value: 140},
+        {name: '11月', value: 150},
+        {name: '12月', value: 160},
+      ],
+    }
+  },
+  methods: {
+  }
+}
+</script>
+<style>
+
+</style>

@@ -1,0 +1,28 @@
+html:
+
+	<div1 v-if="切换主题 === '第一种'">
+
+
+	<div2 v-else-if="">
+
+	<div3 v-else>
+
+
+
+js:
+
+	data() {
+		切换主题：''
+	}
+	// activated  前进或后退都会执行
+	created () {
+		this.切换主题 = localStorage.主题
+	}
+	methods: {
+		onClick () {
+			if(localStorage.主题 == '第一种') {
+				this.切换主题 = '第二种'
+				localStorage.主题 = '第二种'
+			}
+		}
+	}

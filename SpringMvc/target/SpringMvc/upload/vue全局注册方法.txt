@@ -1,0 +1,21 @@
+公共方法，多处调用
+
+第一步：在src下新建文件夹publicMethods（自己取名）
+第二步：publicMethods文件夹下新建index.js文件，用来储存方法
+	
+	写法：
+
+		export default{
+  			ceshi: () => {
+    				console.log('1111')
+  			}
+		}
+
+第三步：在src下main.js中引入，并注册全局（Vue.prototype.名称自己写）
+
+	import publicMethods from './publicMethods'
+	Vue.prototype.publicMethods = publicMethods
+
+第四步：页面调用（this.自己写的名称.需要调用的方法名称）
+
+	this.publicMethods.ceshi()

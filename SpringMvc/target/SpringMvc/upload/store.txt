@@ -1,0 +1,46 @@
+store, 默认引入路径是index.js，如果有其他js文件，需要全部引入，并且在index.js中注册
+
+
+
+export default new Vuex.Store({
+  modules: {
+    user,			---- 引入的文件
+    global			---- 引入的文件
+  },
+  getters			---- 引入的文件
+})
+
+
+
+state属性 === data属性，里面保存值，
+
+	例如：tabber: true
+
+
+mutations属性 === methods属性，里面写方法，
+
+	例如： setTabbar(state, tabbar) {
+    			state.tabber = tabbar
+ 		 }
+
+
+getter属性 === watch / computed 属性，属于store的监听
+
+
+如果不是index.js文件，需要暴露出属性，让外部可以获取到，
+
+	例如：
+
+		export default {
+  				state,
+  				getters,
+ 				 mutations,
+  				actions
+		}
+
+
+
+
+如果在vue中使用，一般使用方法就是，
+
+	例如：    this.$store.commit('setTabbar', true)

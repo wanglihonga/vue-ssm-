@@ -1,0 +1,31 @@
+过滤器 filters
+
+第一步：在src下新建一个文件夹名称为filters
+第二步：文件夹里新建index.js，用来储存方法
+	
+	写法：
+		exports.category = (v) => {
+  			let name = ''
+  			switch (v) {
+    				case 0: {
+    	  				name = '科工'
+      					break
+    					}
+    				case 1: {
+     					 name = '科技'
+      					break
+    				}
+  			}
+  			return name
+		}
+
+第三步：在src下main.js中引入，并且注册这个文件
+
+		import filters from './filters'
+		Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
+
+第四步：使用，在html中使用时
+
+	{{ 属性名 | 过滤器方法名 }} === {{ item.type | types }}
+		
+	

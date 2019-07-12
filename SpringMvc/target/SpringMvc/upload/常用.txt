@@ -1,0 +1,31 @@
+公司共享文件地址：
+	\\10.240.44.60
+
+element-ui文档：
+	http://element-cn.eleme.io/#/zh-CN/component/form
+
+vue文档：
+	https://cn.vuejs.org/
+
+git官网：
+	https://git-scm.com/
+
+git教程：	
+	https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+
+git常用命令：
+	克隆项目地址	git clone ...（地址）
+	更新项目：git pull
+	提交项目流程：	
+		1、git add .                    添加到缓存可以被覆盖
+		2、git commit -m '备注'		准备提交的记录，‘’中写自己的备注
+		3、git push			提交
+
+初始化vue项目（新建项目）：
+	全局安装：npm install --global vue-cli
+	创建一个自己的项目：vue init webpack my-project（项目名称）
+
+cmd中查看各种版本
+	查看node版本：node -v
+	查看npm版本：npm -v
+	查看vue版本：vue -V(大写)

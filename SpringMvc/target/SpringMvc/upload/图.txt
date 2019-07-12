@@ -1,0 +1,122 @@
+<template>
+  <div id="app">
+    <div>
+      <!--柱状图-->
+      <schart canvasId="histogram"
+              type="bar"
+              style="width: 40%;height: 200px; float: left"
+              :data="data"
+              :options="options1"
+      ></schart>
+      <!--折线图-->
+      <schart canvasId="lineChart "
+              type="line"
+              style="width: 40%;height: 200px;float: left;"
+              :data="data"
+              :options="options"
+      ></schart>
+      <!--环形图-->
+      <schart canvasId="pieChart "
+              type="ring"
+              style="width: 40%;height: 280px;float: left"
+              :data="data1"
+              :options="options4"
+      ></schart>
+      <!--折线面积图-->
+      <schart canvasId="lineChartM"
+              type="line"
+              style="width: 40%;height: 200px;float: left;"
+              :data="data2"
+              :options="options2"
+      ></schart>
+    </div>
+  </div>
+</template>
+
+<script >
+import Schart from 'vue-schart'
+export default {
+  components: {
+    Schart
+  },
+  data () {
+    return {
+      title: {
+        floating:true,
+        text: '圆心显示的标题'
+      },
+      data: [
+        {name: '1月', value: 50},
+        {name: '2月', value: 60},
+        {name: '3月', value: 70},
+        {name: '4月', value: 80},
+        {name: '5月', value: 90},
+        {name: '6月', value: 100},
+        {name: '7月', value: 110},
+        {name: '8月', value: 120},
+        {name: '9月', value: 130},
+        {name: '10月', value: 140},
+        {name: '11月', value: 150},
+        {name: '12月', value: 160},
+      ],
+      data1: [
+        {name: '1月', value: 10},
+        {name: '2月', value: 20},
+        {name: '3月', value: 30},
+        {name: '4月', value: 40},
+      ],
+      data2: [
+        {name: '1月', value: 50},
+        {name: '2月', value: 10},
+        {name: '3月', value: 60},
+        {name: '4月', value: 100},
+        {name: '5月', value: 20},
+        {name: '6月', value: 80},
+      ],
+      /*柱状图样式*/
+      options1: {
+        title: '标题',
+        autoWidth: true,   // 设置宽高自适应
+        showValue: false,
+        bgColor: '#F9EFCC',
+        fillColor: '#00887C',
+        contentColor: 'rgba(46,199,201,0.3)',
+        yEqual: 7
+      },
+      /*折线图样式*/
+      options: {
+        title: '标题',
+        autoWidth: true,   // 设置宽高自适应
+        showValue: false,
+        bgColor: '#eeeeee',
+        fillColor: '#00887C',
+        contentColor: 'rgba(46,199,201,0.3)',
+        yEqual: 7
+      },
+      /*折线面积图样式*/
+      options2: {
+        title: '标题',
+        autoWidth: true,
+        titleColor: '#00887C',
+        fillColor: 'red',
+        contentColor: 'rgba(46,199,201,0.3)',
+        backgroundColor: '#FFFFFF'
+      },
+      /*环形图样式*/
+      options4: {
+        title: '标题',
+        bgColor: '#ffffff',
+        fillColor: '#00887C',
+        contentColor: 'rgba(46,199,201,0.3)',
+        radius: 100,
+        innerRadius:60,
+      }
+    }
+  },
+  methods: {
+  }
+}
+</script>
+<style>
+
+</style>

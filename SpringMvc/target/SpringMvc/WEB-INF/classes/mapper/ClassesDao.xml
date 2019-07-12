@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cm.dao.ClassesDao">
+    <select id="findAllClass" resultType="Classes">
+      select * from classes where className like '%${className}%' or classId=#{className}
+    </select>
+    <select id="selectAllClass" resultType="Classes">
+      select * from classes
+    </select>
+    <insert id="addClass" parameterType="Classes">
+        insert into classes(classId,className)
+        values(#{classId},#{className})
+	</insert>
+    <delete id="deleteClass" parameterType="Classes">
+		delete from classes where classId=#{classId}
+	</delete>
+    <update id="updateClass" parameterType="Classes" >
+      update classes set className=#{className} where classId=#{classId}
+    </update>
+    <select id="findClassById" resultType="Classes">
+      select * from classes where classId = #{classId}
+    </select>
+</mapper>

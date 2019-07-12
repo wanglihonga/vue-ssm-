@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cm.dao.MessageDao">
+    <!--<select id="findAllSub" resultType="Message">-->
+      <!--select * from subject where subName like '%${subName}%' or subId=#{subName}-->
+    <!--</select>-->
+    <!--<select id="selectAllSub" resultType="Subject">-->
+      <!--select * from subject-->
+    <!--</select>-->
+    <insert id="addMessage" parameterType="Message">
+        insert into message(reporterId,reporterName,receiveId,receiveName,content)
+        values(#{reporterId},#{reporterName},#{receiveId},#{receiveName},#{content})
+	</insert>
+    <!--<delete id="deleteSubject" parameterType="Subject">-->
+		<!--delete from subject where subId=#{subId}-->
+	<!--</delete>-->
+    <!--<update id="updateSubject" parameterType="Subject" >-->
+      <!--update subject set subName=#{subName} where subId=#{subId}-->
+    <!--</update>-->
+    <!--<select id="findSubjectById" resultType="Subject">-->
+      <!--select * from subject where subId = #{subId}-->
+    <!--</select>-->
+</mapper>

@@ -1,0 +1,21 @@
+容器：（只有外层容器存在时，其余插件才会有效果）
+	<el-container>：外层容器
+	<el-header>：头部栏
+	<el-aside>：侧边栏
+	<el-footer>：底部栏
+	<el-main>：内容区
+
+布局格式：
+	1、el-row 嵌套 el-col
+		el-row:
+			:gutter='20'，表示边距
+			flex布局（弹性盒子布局）:      当type='flex'，通过justify属性指定start（默认左对齐）, center（居中）, end（右对齐）, space-between（两侧贴边）, space-around（两侧留空隙） 
+
+		el-col:
+			:span='6'，表示栅格占据的列数;
+			:offset='6'，表示偏移栏数
+			响应式布局(px)：:xs<768，:sm>=768，:md>=992，:lg>=1200，:xl>=1920			
+
+
+el-form 标签：
+	绑定 :model="form"，data中form写法为对象form：{name: ''}，表示名称字段可以被form标签获取进行判断，字标签绑定方式还是 v-model

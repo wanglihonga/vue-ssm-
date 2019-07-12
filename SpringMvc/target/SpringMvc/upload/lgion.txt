@@ -1,0 +1,122 @@
+package bank;
+import java.awt.*;
+
+import java.awt.event.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.*;
+
+
+public class lgoin extends JFrame implements ActionListener
+{
+
+
+		String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
+		String url = "jdbc:sqlserver://localhost:1433;DatabaseName=用户表"; 
+		String User="sa"; 
+		String password="123456"; 
+		Statement sta=null;
+        ResultSet res=null;
+        Connection conn=null;
+        
+	JLabel lab_yhm=new JLabel("用户名:");
+	JLabel lab_ma=new JLabel("密码:");
+	JLabel lab_title=new JLabel("超市管理系统");
+	
+	
+	JTextField tf=new JTextField();
+	JPasswordField pf=new JPasswordField();
+	
+	JButton btn_username=new JButton("登录");
+	JButton btn_cancel=new JButton("取消");
+	 
+	Container cp=getContentPane();
+   
+    
+    
+public lgoin(String title)
+{
+	super(title);
+	cp.setLayout(null);
+	cp.add(lab_title);
+	cp.add(tf);
+	cp.add(lab_yhm);
+	cp.add(lab_ma);
+	cp.add(pf);
+	cp.add(btn_username);
+	cp.add(btn_cancel);
+	lab_title.setBounds(80,20,300,30);
+	lab_title.setFont(new Font("楷体",Font.BOLD,30));
+	lab_title.setForeground(Color.RED);
+	tf.setBounds(160,80,130,30);
+	pf.setBounds(160, 130, 130, 30);
+	lab_yhm.setBounds(100, 80, 80, 30);
+	lab_ma.setBounds(100, 130, 80, 30);
+	btn_username.setBounds(100, 200, 80, 30);
+	btn_cancel.setBounds(200, 200, 80, 30);
+	btn_username.addActionListener(this);
+	btn_cancel.addActionListener(this);
+	setVisible(true);
+	setBounds(500,300,400,300); 
+}
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getSource()==btn_username)
+		{
+			
+			try{ 
+				 Class.forName(driverName);
+   	             conn = DriverManager.getConnection(url,User,password);
+   	             sta= conn.createStatement();
+   	             
+//				if(tf.getText().trim().equals("")||new String(pf.getPassword()).trim().equals(""))
+//				{
+//					JOptionPane.showMessageDialog(null, "用户名或密码不能为空",null,JOptionPane.INFORMATION_MESSAGE);
+//				}
+// 				else
+//				{
+//				 String yhm="'"+tf.getText()+"'";
+//				 String yma="'"+new String(pf.getPassword())+"'";
+//	
+//   	             String sql= "select * from userlist where username="+yhm+" "+"and"+" "+"password="+yma;
+   	             String sql1="select * from 用户表 ";
+        	     res=sta.executeQuery(sql1);
+        	    if(res.next())
+        	    {
+        	    	JOptionPane.showMessageDialog(null, "登录成功",null,JOptionPane.INFORMATION_MESSAGE);
+//        	    	new MainApplet("惠友超市欢迎您！");
+//        	    	setVisible(false);
+        	    }
+        	    else{
+        	    	
+        	    	JOptionPane.showMessageDialog(null, "用户名或密码错误",null,JOptionPane.INFORMATION_MESSAGE);
+//        	        tf.setText("");
+//        	        pf.setText("");
+//        	    }
+			    }
+	        }catch(Exception e1){
+				e1.printStackTrace();
+				System.out.println("不成功!");
+			}
+		}
+		if(e.getSource()==btn_cancel)
+		{
+	        setVisible(false);
+		}
+	} 
+	public static void main(String args[])
+	{
+		
+		new lgoin("登录界面");
+		
+	}
+}
+
+
+
+
+

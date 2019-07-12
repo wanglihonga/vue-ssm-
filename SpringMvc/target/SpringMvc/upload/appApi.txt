@@ -1,0 +1,26 @@
+APP请求api
+
+1. 进入src-api-Resource.js
+	
+	创建最新的api接口，相同模块的可以放在一起
+
+   还是这个页面 export default
+	
+	需要把api接口暴露出去
+
+2. 进入store-modules
+	
+	一个模块创建一个js文件（具体参考centralSpirit.js）
+		
+		1. 引入api
+		2. 引入mutation-types（store中可以保存值）
+
+3. 进入 store-index.js
+
+	引入刚才创建的js
+
+	还是这个页面modules把引入的js暴露出去
+
+4. 页面使用刚才创建的api（具体参考home.vue中请求轮播图的api）
+	
+	this.$store.dispath('api名称').then(res)
